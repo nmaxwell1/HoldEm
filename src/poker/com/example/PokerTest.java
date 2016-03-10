@@ -38,9 +38,9 @@ public class PokerTest {
 
     static boolean a() {
         Deck d = new Deck();
-        d.getFlop();
-        d.getTurn();
-        d.getRiver();
+        Flop flop = d.getFlop();
+        Card turn = d.getTurn();
+        Card river = d.getRiver();
 
         HoleCardsComparator c = new HoleCardsComparator();
         HoleCards h1 = d.getHoleCards();
@@ -56,6 +56,19 @@ public class PokerTest {
 
         boolean tmp = false;
         int straightFlushHighCard = c.checkStraightFlush(boardNHoleCards);
+        int tripCard = c.getHighestTripsInList(boardNHoleCards);
+
+        if (tripCard > 0) {
+            System.out.println("==========================================");
+
+            printList("Board List: ", boardList);
+
+            System.out.println("Found Quads: " + tripCard + "\nHole Cards: " + h1
+            + "\nFlop: " + flop + "\nturn: " + turn + "\nRiver: " + river);
+            
+            return true;
+        }
+
         if (straightFlushHighCard > 0) {
             System.out.println("==========================================");
 

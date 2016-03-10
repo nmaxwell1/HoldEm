@@ -132,8 +132,18 @@ public class HoleCardsComparator implements Comparator<HoleCards> {
 
     // gives the highest rank for trips in list
     // i.e if list contains same rank three 
-    public int checkHighestTripsInList(List<Card> list) {
+    public int getHighestTripsInList(List<Card> list) {
         Map<Integer, Integer> map = rankCountMap(list);
+        return getHighestKey(map, 3);
+    }
+
+    public int getQuadsInList(List<Card> list) {
+        Map<Integer, Integer> map = rankCountMap(list);
+        return getHighestKey(map, 4);
+    }
+
+    public int getHighestKey(Map<Integer, Integer> map, int value) {
+//        Map<Integer, Integer> map = rankCountMap(list);
         int tripRank = 0;
 
         Set<Integer> mapKeys = map.keySet();        // gets all the keys of map (unique since it's Set)
@@ -142,14 +152,15 @@ public class HoleCardsComparator implements Comparator<HoleCards> {
 
         for (int i = 0; i < arrayKeys.length; i++) {
             int key = (int) arrayKeys[i];
-            if(map.get(key) == 3)
+            if (map.get(key) == value) {
                 return key;
-        }    
+            }
+        }
         System.out.println("Set map.keySet() is : " + mapKeys.toString());
         return tripRank;
     }
 // added a new line
-    
+
     public boolean cardFound(int rank, Suit suit, List<Card> boardNHoleCards) {
         for (Card c : boardNHoleCards) {
             if (c.getRank() == rank && c.getSuit() == suit) {

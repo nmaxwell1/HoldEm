@@ -29,7 +29,7 @@ public class Deck {
         return boardList;
     }
 
-    //initialize deck by merging rank/suit combinations, adding to cardList and shuffling 
+    //initialize deck by merging rank/suit combinations, adding to cardList and shuffling
     public Deck() {
         mergeRankNSuit();
         Collections.shuffle(cardList);
@@ -65,12 +65,17 @@ public class Deck {
         return new Flop(c1, c2, c3);
     }
 
-    public void getTurn() {
-        boardList.add(getCard());
+    public Card getTurn() {
+        Card c = getCard();
+        boardList.add(c);
+    
+        return c;
     }
 
-    public void getRiver() {
-        boardList.add(getCard());
+    public Card getRiver() {
+        Card c = getCard();
+        boardList.add(c);
+        return c;
     }
 
 }
