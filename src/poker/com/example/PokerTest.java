@@ -24,15 +24,19 @@ public class PokerTest {
     /**
      * @param args the command line arguments
      */
+
+
     public static void main(String[] args) {
 
         int count = 0;
         boolean found = false;
+
         while (found == false) {
             found = a();
             count++;
         }
-        System.out.println("Count is " + count);
+  
+System.out.println("Count is " + count);
 
     }
 
@@ -41,52 +45,30 @@ public class PokerTest {
         Flop flop = d.getFlop();
         Card turn = d.getTurn();
         Card river = d.getRiver();
+        CommunityCards communityCards = new CommunityCards(flop,turn,river);
 
-        HoleCardsComparator c = new HoleCardsComparator();
-        HoleCards h1 = d.getHoleCards();
-        List<Card> boardList = d.getBoardList();
-        List boardNHoleCards = c.mergeHoleCardsNBoard(h1, boardList);
+        HoleCards h1 = new HoleCards(d.getCard(),d.getCard());
+        
+        HoleCardsRankFinder rankFinder = new HoleCardsRankFinder(h1,communityCards.getCommunityCards());
+        
+        System.out.println("Hole cards: " + h1);
+        printList("Commmunity Cards: ",communityCards.getCommunityCards());
+        printList("Hole n CommunityCards: ", rankFinder.getHoleNCommunityCards());
 
-        Map rankCountMap = c.rankCountMap(boardNHoleCards);
-        System.out.println("rank map : " + rankCountMap);
-
-        if (c.cardFound(14, SPADE, boardList)) {
-            System.out.println("Found Ace of Spade");
-        }
-
-        boolean tmp = false;
-        int straightFlushHighCard = c.checkStraightFlush(boardNHoleCards);
-        int tripCard = c.getHighestTripsInList(boardNHoleCards);
-
-        if (tripCard > 0) {
-            System.out.println("==========================================");
-
-            printList("Board List: ", boardList);
-
-            System.out.println("Found Quads: " + tripCard + "\nHole Cards: " + h1
-            + "\nFlop: " + flop + "\nturn: " + turn + "\nRiver: " + river);
-            
-            return true;
-        }
-
+        
+        int straightFlushHighCard = rankFinder.checkStraightFlush();
         if (straightFlushHighCard > 0) {
             System.out.println("==========================================");
 
-            tmp = true;
-            printList("Board List: ", boardList);
+            printList("Board List: ", rankFinder.getHoleNCommunityCards());
             System.out.println(h1);
 
-            Map suitCountMap = c.suitCountMap(boardNHoleCards);
-            System.out.println("suit map : " + suitCountMap);
-//            Map rankCountMap = c.rankCountMap(boardNHoleCards);
-//            System.out.println("rank map : " + rankCountMap);
-//            c.getFlushSuit(boardNHoleCards);
-//            Card flushCard = c.GetFlushCardInPlay(h1, boardList);
+            System.out.println("suit map : " + rankFinder.getSuitMap());
             System.out.println("Player has " + straightFlushHighCard + " high straigh flush.");
-
+            return true;
         }
 
-        return tmp;
+        return false;
 
     }
 

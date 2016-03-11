@@ -17,16 +17,11 @@ public class Deck {
 
     Suit[] suitList = Suit.values();
     private ArrayList<Card> cardList = new ArrayList(52);
-    protected ArrayList<Card> boardList = new ArrayList(5);
     private int index = 0; // window card index
 
     //getter
     public ArrayList<Card> getCardList() {
         return cardList;
-    }
-
-    public ArrayList<Card> getBoardList() {
-        return boardList;
     }
 
     //initialize deck by merging rank/suit combinations, adding to cardList and shuffling
@@ -50,31 +45,21 @@ public class Deck {
         return c;
     }
 
-    public HoleCards getHoleCards() {
-        return new HoleCards(getCard(), getCard());
-    }
 
     public Flop getFlop() {
         Card c1 = getCard();
         Card c2 = getCard();
         Card c3 = getCard();
-        boardList.add(c1);
-        boardList.add(c2);
-        boardList.add(c3);
-
         return new Flop(c1, c2, c3);
     }
 
     public Card getTurn() {
         Card c = getCard();
-        boardList.add(c);
-    
         return c;
     }
 
     public Card getRiver() {
         Card c = getCard();
-        boardList.add(c);
         return c;
     }
 
