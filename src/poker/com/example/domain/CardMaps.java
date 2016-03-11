@@ -22,6 +22,8 @@ public class CardMaps {
     protected Map<Suit, Integer> suitMap; // = suitCountMap(board);
     protected ArrayList<Card> holeNCommunityCards; // sorted
 
+    
+    
     public CardMaps(List<Card> holeNCommunityCards) {
         rankMap = rankCountMap(holeNCommunityCards);
         suitMap = suitCountMap(holeNCommunityCards);
@@ -87,7 +89,7 @@ public class CardMaps {
         return map;
     }
 
-    // merges HoleCards and board into one list of 7 Cards
+    // merges HoleCards and card List into one list of 7 Cards
     public ArrayList<Card> mergeHoleCardsToList(HoleCards p, List<Card> list) {
         ArrayList<Card> boardNHoleCards = new ArrayList<>(7);
         // add board cards

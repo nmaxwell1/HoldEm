@@ -41,6 +41,13 @@ public class Card implements Comparable <Card> {
         return st;
     }
 
+    public boolean equals(Card c){
+        if(c.rank == this.rank && c.suit == this.suit)
+            return true;
+        else
+            return false;
+    }
+    
     @Override
     public int compareTo(Card  c) {
         if (rank > c.rank)

@@ -51,10 +51,11 @@ System.out.println("Count is " + count);
         
         HoleCardsRankFinder rankFinder = new HoleCardsRankFinder(h1,communityCards.getCommunityCards());
         
-        System.out.println("Hole cards: " + h1);
-        printList("Commmunity Cards: ",communityCards.getCommunityCards());
+//        System.out.println("Hole cards: " + h1);
+//        printList("Commmunity Cards: ",communityCards.getCommunityCards());
         printList("Hole n CommunityCards: ", rankFinder.getHoleNCommunityCards());
 
+        
         
         int straightFlushHighCard = rankFinder.checkStraightFlush();
         if (straightFlushHighCard > 0) {
@@ -65,6 +66,15 @@ System.out.println("Count is " + count);
 
             System.out.println("suit map : " + rankFinder.getSuitMap());
             System.out.println("Player has " + straightFlushHighCard + " high straigh flush.");
+            
+            Card x = new Card(5,SPADE);
+            Card y = new Card(5,CLUB);
+            Card z = new Card(5,SPADE);
+            testing(x,y);
+            testing(x,z);
+            testing(y,z);
+
+
             return true;
         }
 
@@ -88,5 +98,10 @@ System.out.println("Count is " + count);
         }
         return uniqueCardList;
     }
-
+    
+    static void testing(Card x, Card y){
+                System.out.println("x: " + x + " y " + y);
+            System.out.print(" Cards x and y\n\tx equals y : " + x.equals(y) + "\n\tx == y ");
+            System.out.println(x==y);
+    }
 }

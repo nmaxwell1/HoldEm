@@ -17,14 +17,14 @@ import java.util.TreeMap;
 
 /**
  * To establish ranking of Holecards relative to the Board (List <Card>)
- * @author madi
+ *
+ * @author Hammad Quddus
  */
 public class HoleCardsRankFinder extends CardMaps//implements Comparator<HoleCards> {
 {
 
     protected HoleCards holeCards;
     protected ArrayList<Card> communityCards; // sorted
-
 
     public HoleCardsRankFinder(HoleCards holeCards, List<Card> communityCards) {
         super(holeCards, communityCards);
@@ -40,8 +40,6 @@ public class HoleCardsRankFinder extends CardMaps//implements Comparator<HoleCar
     public ArrayList<Card> getCommunityCards() {
         return communityCards;
     }
-    
-    
 
     // returns 0 if no straight or else return high card for straight
     public int checkStraight() {
@@ -54,7 +52,6 @@ public class HoleCardsRankFinder extends CardMaps//implements Comparator<HoleCar
         int prev = (int) arrayKeys[0];
 
 //        System.out.println("Set map.keySet() is : " + mapKeys.toString());
-
         // check if there is 5 consecutive increasing keys in array    
         for (int i = 1; i < arrayKeys.length; i++) {
             int cur = (int) arrayKeys[i];
@@ -74,7 +71,8 @@ public class HoleCardsRankFinder extends CardMaps//implements Comparator<HoleCar
         System.out.println("Player has a " + straightLength + " card straight, " + howHigh + " high.");
         return howHigh;
     }
-/*
+
+    /*
     // Return highest hole card that comes into play for flush.
     // returns null if no hole card comes into play (None of the same suit or lower than 5 card board flush)
     public Card GetFlushCardInPlay() {
@@ -122,13 +120,13 @@ public class HoleCardsRankFinder extends CardMaps//implements Comparator<HoleCar
         }
         return flushCard;
     }
-*/
+     */
 
     // returns null if no flush or returns the flush suit 
     public Suit getFlushSuit() {
         Set<Suit> mapKeys = suitMap.keySet();
 
-        System.out.println("SuitMap is : " + suitMap);
+//        System.out.println("SuitMap is : " + suitMap);
 
         for (Suit s : mapKeys) {
             if (suitMap.get(s) >= 5) {
@@ -137,8 +135,7 @@ public class HoleCardsRankFinder extends CardMaps//implements Comparator<HoleCar
         }
         return null;
     }
-    
-    
+
     // returns 0 if no straight flush else returns how hight straight flush is
     public int checkStraightFlush() {
         Suit flushSuit = getFlushSuit();
@@ -161,12 +158,11 @@ public class HoleCardsRankFinder extends CardMaps//implements Comparator<HoleCar
         int prev = (int) arrayKeys[0];
 
 //        System.out.println("Set map.keySet() is : " + mapKeys.toString());
-
         // check if there is 5 consecutive increasing keys in array    
         for (int i = 1; i < arrayKeys.length; i++) {
             int cur = (int) arrayKeys[i];
             //check if prev n cur are consecutive and flush suit
-            if (prev + 1 == cur && cardFound(prev, flushSuit) && cardFound(cur, flushSuit)) {
+            if (prev + 1 == cur && cardFoundInHoleNCommunityCardsList(prev, flushSuit) && cardFoundInHoleNCommunityCardsList(cur, flushSuit)) {
                 prev = cur;
                 counter++;
 
@@ -214,15 +210,22 @@ public class HoleCardsRankFinder extends CardMaps//implements Comparator<HoleCar
     }
 // added a new line
 
-    public boolean cardFound(int rank, Suit suit) {
+    public boolean cardFoundInHoleNCommunityCardsList(int rank, Suit suit) {
+//        Card d = new Card(rank, suit);
+//        System.out.println("Card found : " + d + " " + holeNCommunityCards.contains(d));
+//        return holeNCommunityCards.contains(c);
+
+                
         for (Card c : holeNCommunityCards) {
             if (c.getRank() == rank && c.getSuit() == suit) {
                 return true;
             }
         }
-        return false;
-    }
 
+        
+        return false;
+         
+    }
 
     static void printList(Collection col) {   // with toString implementation of elements
 
