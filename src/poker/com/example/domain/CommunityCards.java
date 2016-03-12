@@ -29,6 +29,9 @@ public class CommunityCards {
 
     }
     
+    public String toString(){
+        return communityCards.toString();
+    }
     
     
 }

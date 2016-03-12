@@ -5,6 +5,7 @@
  */
 package poker.com.example;
 
+import poker.com.example.domain.rankfinder.HoleCardsRankFinder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -24,62 +25,49 @@ public class PokerTest {
     /**
      * @param args the command line arguments
      */
-
-
     public static void main(String[] args) {
 
         int count = 0;
         boolean found = false;
-
-        while (found == false) {
-            found = a();
+        while (count < 200) {
+            //found = 
+            a();
             count++;
         }
-  
-System.out.println("Count is " + count);
-
+        System.out.println("Count is " + count);
     }
 
     static boolean a() {
+
         Deck d = new Deck();
         Flop flop = d.getFlop();
         Card turn = d.getTurn();
         Card river = d.getRiver();
-        CommunityCards communityCards = new CommunityCards(flop,turn,river);
+        CommunityCards communityCards = new CommunityCards(flop, turn, river);
 
-        HoleCards h1 = new HoleCards(d.getCard(),d.getCard());
-        
-        HoleCardsRankFinder rankFinder = new HoleCardsRankFinder(h1,communityCards.getCommunityCards());
-        
-//        System.out.println("Hole cards: " + h1);
-//        printList("Commmunity Cards: ",communityCards.getCommunityCards());
-        printList("Hole n CommunityCards: ", rankFinder.getHoleNCommunityCards());
+        HoleCards h1 = new HoleCards(d.getCard(), d.getCard());
 
-        
-        
-        int straightFlushHighCard = rankFinder.checkStraightFlush();
-        if (straightFlushHighCard > 0) {
-            System.out.println("==========================================");
+        HoleCardsRankFinder rankFinder = new HoleCardsRankFinder(h1, communityCards);
+
+//        printList("Hole n CommunityCards: ", rankFinder.getHoleNCommunityCards());
+
+        System.out.println("------------------------------------------------");
+
+        int test = rankFinder.checkStraight();
+        if (test > 0) {
+            System.out.println("==========================================================");
+            System.out.println("==========================================================");
 
             printList("Board List: ", rankFinder.getHoleNCommunityCards());
             System.out.println(h1);
 
             System.out.println("suit map : " + rankFinder.getSuitMap());
-            System.out.println("Player has " + straightFlushHighCard + " high straigh flush.");
-            
-            Card x = new Card(5,SPADE);
-            Card y = new Card(5,CLUB);
-            Card z = new Card(5,SPADE);
-            testing(x,y);
-            testing(x,z);
-            testing(y,z);
-
+            System.out.println("Player has " + test + " something something.");
+            System.out.println("==========================================================");
 
             return true;
         }
-
         return false;
-
     }
 
     static void printList(String s, Collection col) {   // with toString implementation of elements
@@ -98,10 +86,5 @@ System.out.println("Count is " + count);
         }
         return uniqueCardList;
     }
-    
-    static void testing(Card x, Card y){
-                System.out.println("x: " + x + " y " + y);
-            System.out.print(" Cards x and y\n\tx equals y : " + x.equals(y) + "\n\tx == y ");
-            System.out.println(x==y);
-    }
+
 }

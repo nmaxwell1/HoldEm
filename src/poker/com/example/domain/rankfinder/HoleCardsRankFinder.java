@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package poker.com.example.domain;
+package poker.com.example.domain.rankfinder;
 
+import poker.com.example.domain.rankfinder.CardMaps;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,6 +15,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import poker.com.example.domain.Card;
+import poker.com.example.domain.CommunityCards;
+import poker.com.example.domain.HoleCards;
+import poker.com.example.domain.Suit;
 
 /**
  * To establish ranking of Holecards relative to the Board (List <Card>)
@@ -26,9 +31,10 @@ public class HoleCardsRankFinder extends CardMaps//implements Comparator<HoleCar
     protected HoleCards holeCards;
     protected ArrayList<Card> communityCards; // sorted
 
-    public HoleCardsRankFinder(HoleCards holeCards, List<Card> communityCards) {
-        super(holeCards, communityCards);
+    public HoleCardsRankFinder(HoleCards holeCards, CommunityCards communityCardsInstance) {
+        super(holeCards, communityCardsInstance.getCommunityCards());
         this.holeCards = holeCards;
+        ArrayList<Card> communityCards = communityCardsInstance.getCommunityCards();
         Collections.sort(communityCards);
         this.communityCards = (ArrayList<Card>) communityCards;
     }
@@ -51,13 +57,16 @@ public class HoleCardsRankFinder extends CardMaps//implements Comparator<HoleCar
         Object[] arrayKeys = mapKeys.toArray();     // gets all the keys into an arrey
         int prev = (int) arrayKeys[0];
 
-//        System.out.println("Set map.keySet() is : " + mapKeys.toString());
+        System.out.println("Set rankMap.keySet() is : " + mapKeys.toString());
         // check if there is 5 consecutive increasing keys in array    
         for (int i = 1; i < arrayKeys.length; i++) {
             int cur = (int) arrayKeys[i];
+//            System.out.println("prev: " + prev + " cur " + cur);
+
             if (prev + 1 == cur) {
-                prev = cur;
+//                prev = cur;
                 counter++;
+//                System.out.println("Counter: " + counter);
 
                 if (counter >= 5) {   // straight found
                     howHigh = cur;
@@ -67,6 +76,8 @@ public class HoleCardsRankFinder extends CardMaps//implements Comparator<HoleCar
             } else {                // current key not connected to prev key, reset counter
                 counter = 1;
             }
+            prev = cur;
+
         }
         System.out.println("Player has a " + straightLength + " card straight, " + howHigh + " high.");
         return howHigh;
@@ -121,13 +132,11 @@ public class HoleCardsRankFinder extends CardMaps//implements Comparator<HoleCar
         return flushCard;
     }
      */
-
     // returns null if no flush or returns the flush suit 
     public Suit getFlushSuit() {
         Set<Suit> mapKeys = suitMap.keySet();
 
 //        System.out.println("SuitMap is : " + suitMap);
-
         for (Suit s : mapKeys) {
             if (suitMap.get(s) >= 5) {
                 return s;
@@ -199,6 +208,7 @@ public class HoleCardsRankFinder extends CardMaps//implements Comparator<HoleCar
         Object[] arrayKeys = mapKeys.toArray();     // gets all the keys into an arrey
         int prev = (int) arrayKeys[0];
 
+
         for (int i = 0; i < arrayKeys.length; i++) {
             int key = (int) arrayKeys[i];
             if (map.get(key) == value) {
@@ -215,23 +225,14 @@ public class HoleCardsRankFinder extends CardMaps//implements Comparator<HoleCar
 //        System.out.println("Card found : " + d + " " + holeNCommunityCards.contains(d));
 //        return holeNCommunityCards.contains(c);
 
-                
         for (Card c : holeNCommunityCards) {
             if (c.getRank() == rank && c.getSuit() == suit) {
                 return true;
             }
         }
 
-        
         return false;
-         
-    }
 
-    static void printList(Collection col) {   // with toString implementation of elements
-
-        for (Object item : col) {
-            System.out.println("jjj : " + item);
-        }
     }
 
 }

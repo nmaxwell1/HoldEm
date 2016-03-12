@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package poker.com.example.domain;
+package poker.com.example.domain.rankfinder;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import poker.com.example.domain.Card;
+import poker.com.example.domain.HoleCards;
+import poker.com.example.domain.Suit;
 
 /**
  *
